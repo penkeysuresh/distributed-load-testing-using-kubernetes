@@ -31,7 +31,7 @@ spec:
     spec:
       containers:
         - name: locust-master
-          image: gcr.io/tigera-dev/suresh/locust:start-3
+          image: gcr.io/tigera-dev/suresh/locust:start-4
           env:
             - name: LOCUST_MODE
               value: master

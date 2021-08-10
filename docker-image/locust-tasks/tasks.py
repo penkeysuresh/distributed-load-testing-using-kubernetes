@@ -15,7 +15,7 @@
 # limitations under the License.
 
 import random
-from locust import HttpUser, TaskSet, between
+from locust import HttpUser, TaskSet, between, constant
 
 products = [
     '0PUK6V6EV0',
@@ -51,18 +51,7 @@ def addToCart(l):
 
 def checkout(l):
     addToCart(l)
-    l.client.post("/cart/checkout", {
-        'email': 'someone@example.com',
-        'street_address': '1600 Amphitheatre Parkway',
-        'zip_code': '94043',
-        'city': 'Mountain View',
-        'state': 'CA',
-        'country': 'United States',
-        'credit_card_number': '4432-8015-6152-0454',
-        'credit_card_expiration_month': '1',
-        'credit_card_expiration_year': '2039',
-        'credit_card_cvv': '672',
-    })
+    l.client.post("/cart/checkout", {})
 
 class UserBehavior(TaskSet):
 
@@ -70,12 +59,12 @@ class UserBehavior(TaskSet):
         index(self)
 
     tasks = {index: 1,
-        setCurrency: 2,
-        browseProduct: 10,
-        addToCart: 2,
-        viewCart: 3,
+        setCurrency: 1,
+        browseProduct: 1,
+        addToCart: 1,
+        viewCart: 1,
         checkout: 1}
 
 class WebsiteUser(HttpUser):
     tasks = [UserBehavior]
-    wait_time = between(1, 10)
+    wait_time = constant(1)
