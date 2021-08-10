@@ -31,12 +31,12 @@ spec:
     spec:
       containers:
         - name: locust-master
-          image: gcr.io/[PROJECT_ID]/locust-tasks:latest
+          image: gcr.io/tigera-dev/suresh/locust:start-3
           env:
             - name: LOCUST_MODE
               value: master
             - name: TARGET_HOST
-              value: https://[TARGET_HOST]
+              value: http://nginx-server.nginx-system.svc.cluster.local
           ports:
             - name: loc-master-web
               containerPort: 8089

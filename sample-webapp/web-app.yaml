@@ -1,0 +1,63 @@
+##################################################################################################
+# Config for normal work loads
+##################################################################################################
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: nginx-system
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-server
+  namespace: nginx-system
+  labels:
+    app: nginx-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx-server
+  template:
+    metadata:
+      labels:
+        app: nginx-server
+    spec:
+      containers:
+      - name: nginx-server
+        image: gcr.io/tigera-dev/suresh/http-nginx:timeout
+        imagePullPolicy: IfNotPresent
+        # numChurns: 10000
+        # maxUnavailable: 1
+        # nodeSelector:
+          # kubernetes.io/hostname: suresh-bz-94qp-kadm-node-3
+        # tolerations:
+        # - key: "server"
+        #   operator: "Equal"
+        #   value: "true"
+        #   effect: "NoSchedule"
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 80
+            scheme: HTTP
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-server
+  namespace: nginx-system
+  labels:
+    app: nginx-server
+spec:
+  ports:
+  - name: http
+    port: 80
+    targetPort: 80
+  selector:
+    app: nginx-server
+
