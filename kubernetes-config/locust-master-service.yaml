@@ -19,6 +19,7 @@ metadata:
   name: locust-master
   labels:
     app: locust-master
+  namespace: locust-system
 spec:
   ports:
     - port: 8089

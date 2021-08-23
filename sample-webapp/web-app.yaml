@@ -16,7 +16,7 @@ metadata:
   labels:
     app: nginx-server
 spec:
-  replicas: 1
+  replicas: 20
   selector:
     matchLabels:
       app: nginx-server
@@ -29,15 +29,6 @@ spec:
       - name: nginx-server
         image: gcr.io/tigera-dev/suresh/http-nginx:timeout
         imagePullPolicy: IfNotPresent
-        # numChurns: 10000
-        # maxUnavailable: 1
-        # nodeSelector:
-          # kubernetes.io/hostname: suresh-bz-94qp-kadm-node-3
-        # tolerations:
-        # - key: "server"
-        #   operator: "Equal"
-        #   value: "true"
-        #   effect: "NoSchedule"
         readinessProbe:
           httpGet:
             path: /
