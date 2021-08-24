@@ -29,6 +29,13 @@ spec:
       labels:
         app: locust-worker
     spec:
+      topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: ScheduleAnyway
+        labelSelector:
+          matchLabels:
+            app: locust-worker
       containers:
       - name: locust-worker
         image: gcr.io/tigera-dev/suresh/locust:start-4

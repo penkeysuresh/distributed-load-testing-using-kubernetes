@@ -25,6 +25,13 @@ spec:
       labels:
         app: nginx-server
     spec:
+      topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: ScheduleAnyway
+        labelSelector:
+          matchLabels:
+            app: nginx-server
       containers:
       - name: nginx-server
         image: gcr.io/tigera-dev/suresh/http-nginx:timeout
