@@ -20,7 +20,7 @@ metadata:
     name: locust-worker
   namespace: locust-system
 spec:
-  replicas: 40
+  replicas: 80
   selector:
     matchLabels:
       app: locust-worker
@@ -30,7 +30,7 @@ spec:
         app: locust-worker
     spec:
       topologySpreadConstraints:
-      - maxSkew: 1
+      - maxSkew: 3
         topologyKey: kubernetes.io/hostname
         whenUnsatisfiable: ScheduleAnyway
         labelSelector:
